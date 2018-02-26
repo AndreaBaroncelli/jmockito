@@ -142,16 +142,16 @@ public class Mockery implements TestRule
       this.verifications = verifications;
     }
 
-    public <MOCK> MockWrapper<MOCK> when(MOCK mock)
+    public <MOCK> When<MOCK> when(MOCK mock)
     {
-      return new MockWrapper<>(mock);
+      return new When<>(mock);
     }
 
-    public final class MockWrapper<MOCK>
+    public final class When<MOCK>
     {
       private final MOCK mock;
 
-      private MockWrapper(MOCK mock)
+      private When(MOCK mock)
       {
         this.mock = mock;
       }
@@ -173,16 +173,16 @@ public class Mockery implements TestRule
       this.verifications = verifications;
     }
 
-    public <MOCK> MockWrapper<MOCK> when(MOCK mock)
+    public <MOCK> When<MOCK> when(MOCK mock)
     {
-      return new MockWrapper<>(mock);
+      return new When<>(mock);
     }
 
-    public final class MockWrapper<MOCK>
+    public final class When<MOCK>
     {
       private final MOCK mock;
 
-      private MockWrapper(MOCK mock)
+      private When(MOCK mock)
       {
         this.mock = mock;
       }
