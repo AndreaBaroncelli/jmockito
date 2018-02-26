@@ -51,7 +51,7 @@ public class JMockitoTest
     public void unstubbedExecution()
     {
       when.executes(t -> t.nonVoidMethod(12)).thenReturn("dodici");
-      mock.nonVoidMethod(13);
+      mock.nonVoidMethod(14);
     }
 
     @Test
@@ -109,21 +109,21 @@ public class JMockitoTest
     public void unstubbedExecution()
     {
       given.executing(t -> t.nonVoidMethod(12)).thenReturn("dodici");
-      mock.nonVoidMethod(13);
+      mock.nonVoidMethod(14);
     }
 
     @Test
     public void stubbedRun()
     {
-      given.running(t -> t.voidMethod(12)).doNothing();
-      mock.voidMethod(12);
+      given.running(t -> t.voidMethod(13)).doNothing();
+      mock.voidMethod(13);
     }
 
     @Test(expected = UnexpectedInvocationError.class)
     public void unstubbedRun()
     {
-      given.running(t -> t.voidMethod(12)).doNothing();
-      mock.voidMethod(13);
+      given.running(t -> t.voidMethod(13)).doNothing();
+      mock.voidMethod(15);
     }
   }
 
