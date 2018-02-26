@@ -60,14 +60,14 @@ public final class JMockito
       this.mock = mock;
     }
 
-    public Runs runs(Consumer<? super MOCK> consumer)
-    {
-      return new Runs(consumer);
-    }
-
     public <VALUE> Executes<VALUE> executes(Function<? super MOCK, ? extends VALUE> function)
     {
       return new Executes<>(function);
+    }
+
+    public Runs runs(Consumer<? super MOCK> consumer)
+    {
+      return new Runs(consumer);
     }
 
     public final class Executes<VALUE>
