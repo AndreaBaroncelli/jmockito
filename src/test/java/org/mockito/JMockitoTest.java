@@ -80,10 +80,17 @@ public class JMockitoTest
     }
 
     @Test
-    public void returnValue()
+    public void stubbed()
     {
       JMockito.returnValue("dodici").when(mock).executes(t -> t.nonVoidMethod(12));
       assertThat(mock.nonVoidMethod(12), is("dodici"));
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbed()
+    {
+      JMockito.returnValue("dodici").when(mock).executes(t -> t.nonVoidMethod(12));
+      mock.nonVoidMethod(14);
     }
   }
 

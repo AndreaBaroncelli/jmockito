@@ -89,10 +89,17 @@ public class MockeryTest
     }
 
     @Test
-    public void returnValue()
+    public void stubbed()
     {
       mockery.returnValue("dodici").when(mock).executes(t -> t.nonVoidMethod(12));
       assertThat(mock.nonVoidMethod(12), is("dodici"));
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbed()
+    {
+      mockery.returnValue("dodici").when(mock).executes(t -> t.nonVoidMethod(12));
+      mock.nonVoidMethod(14);
     }
   }
 
@@ -111,6 +118,13 @@ public class MockeryTest
     {
       mockery.doNothing().when(mock).runs(t -> t.voidMethod(13));
       mock.voidMethod(13);
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbedRun()
+    {
+      mockery.doNothing().when(mock).runs(t -> t.voidMethod(13));
+      mock.voidMethod(15);
     }
   }
 
