@@ -30,14 +30,14 @@ which is what jMock users generally dislike.
 On the other hand, jMock is totally rigorous in checking the stubbing, but its syntax is not fluent in that it breaks the when/then method chain into two distinct consecutive method calls, as in the following example
 
 ```java
-one(mock.provideIntValue).provideIntValue();
+oneOf(mock).provideIntValue();
 will(returnValue(5));
 ```
 
 which is quite weird as well as stateful (the implementation is based on a builder) and not statically type-checked, so the developer could inadvertently write something like
 
 ```java
-one(mock.provideIntValue).provideIntValue();
+oneOf(mock).provideIntValue();
 will(returnValue("five"));
 ```
 
