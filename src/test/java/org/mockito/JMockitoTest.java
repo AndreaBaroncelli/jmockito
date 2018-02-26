@@ -87,7 +87,7 @@ public class JMockitoTest
     }
   }
 
-  public static class Reset
+  public static class ResetTest
   {
     @Test
     public void preservesName()

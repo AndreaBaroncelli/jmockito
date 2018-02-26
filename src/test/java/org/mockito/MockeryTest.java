@@ -97,7 +97,7 @@ public class MockeryTest
     }
   }
 
-  public class DoNothing
+  public class DoNothingTest
   {
     private Mockable mock;
 
@@ -115,7 +115,7 @@ public class MockeryTest
     }
   }
 
-  public class Apply
+  public class ApplyTest
   {
     @Test
     public void onlyStrictlyNeededStubbing() throws Throwable
@@ -197,7 +197,7 @@ public class MockeryTest
     }
   }
 
-  public class Reset
+  public class ResetTest
   {
     @Test
     public void preservesNames()
