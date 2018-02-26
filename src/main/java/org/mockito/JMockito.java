@@ -81,7 +81,7 @@ public final class JMockito
 
       public When<MOCK> thenReturn(VALUE value)
       {
-        returnValue(value).when(mock).executes(function);
+        function.apply(Mockito.doReturn(value).when(mock));
         return When.this;
       }
     }
