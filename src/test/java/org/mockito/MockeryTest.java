@@ -9,7 +9,6 @@ import org.mockito.exceptions.verification.NeverWantedButInvoked;
 import org.mockito.exceptions.verification.WantedButNotInvoked;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(Nested.class)
@@ -29,14 +28,14 @@ public class MockeryTest
     public void withoutName()
     {
       Mockable mock = mockery.mock(Mockable.class);
-      assertEquals("mockable", mock.toString());
+      assertThat(mock.toString(), is("mockable"));
     }
 
     @Test
     public void withName()
     {
       Mockable mock = mockery.mock(Mockable.class, "pippo");
-      assertEquals("pippo", mock.toString());
+      assertThat(mock.toString(), is("pippo"));
     }
   }
 
@@ -56,7 +55,7 @@ public class MockeryTest
     {
       when.executes(t -> t.nonVoidMethod(12)).thenReturn("dodici");
       String returnValue = mock.nonVoidMethod(12);
-      assertEquals("dodici", returnValue);
+      assertThat(returnValue, is("dodici"));
     }
 
     @Test(expected = UnexpectedInvocationError.class)
@@ -95,7 +94,7 @@ public class MockeryTest
     public void returnValue()
     {
       mockery.returnValue("dodici").when(mock).executes(t -> t.nonVoidMethod(12));
-      assertEquals("dodici", mock.nonVoidMethod(12));
+      assertThat(mock.nonVoidMethod(12), is("dodici"));
     }
   }
 
@@ -249,8 +248,8 @@ public class MockeryTest
 
       mockery.reset();
 
-      assertEquals("pippo1", mock1.toString());
-      assertEquals("pippo2", mock2.toString());
+      assertThat(mock1.toString(), is("pippo1"));
+      assertThat(mock2.toString(), is("pippo2"));
     }
   }
 }
