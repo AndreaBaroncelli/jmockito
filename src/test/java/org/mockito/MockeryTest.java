@@ -5,8 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.model.Statement;
-import org.mockito.exceptions.verification.NeverWantedButInvoked;
-import org.mockito.exceptions.verification.WantedButNotInvoked;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -183,7 +181,7 @@ public class MockeryTest
       mockery.apply(statement, null).evaluate();
     }
 
-    @Test(expected = WantedButNotInvoked.class)
+    @Test(expected = org.mockito.exceptions.verification.WantedButNotInvoked.class)
     public void moreStubbingThanStrictlyNeeded() throws Throwable
     {
       Statement statement = new Statement()
@@ -201,7 +199,7 @@ public class MockeryTest
       mockery.apply(statement, null).evaluate();
     }
 
-    @Test(expected = NeverWantedButInvoked.class)
+    @Test(expected = org.mockito.exceptions.verification.NeverWantedButInvoked.class)
     public void lessStubbingThanStrictlyNeeded() throws Throwable
     {
       Statement statement = new Statement()

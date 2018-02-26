@@ -1,17 +1,17 @@
 package org.mockito;
 
+import net.avh4.test.junit.Nested;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(Enclosed.class)
+@RunWith(Nested.class)
 public class JMockitoTest
 {
-  public static class MockTest
+  public class MockTest
   {
     @Test
     public void withoutName()
@@ -28,7 +28,7 @@ public class JMockitoTest
     }
   }
 
-  public static class WhenTest
+  public class WhenTest
   {
     private Mockable mock;
     private JMockito.When<Mockable> when;
@@ -69,7 +69,7 @@ public class JMockitoTest
     }
   }
 
-  public static class ReturnValueTest
+  public class ReturnValueTest
   {
     private Mockable mock;
 
@@ -87,7 +87,7 @@ public class JMockitoTest
     }
   }
 
-  public static class GivenTest
+  public class GivenTest
   {
     private Mockable mock;
     private JMockito.Given<Mockable> given;
@@ -127,7 +127,7 @@ public class JMockitoTest
     }
   }
 
-  public static class ResetTest
+  public class ResetTest
   {
     @Test
     public void preservesName()
