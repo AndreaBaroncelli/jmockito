@@ -8,7 +8,9 @@ import org.junit.runners.model.Statement;
 import org.mockito.exceptions.verification.NeverWantedButInvoked;
 import org.mockito.exceptions.verification.WantedButNotInvoked;
 
+import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 @RunWith(Nested.class)
 public class MockeryTest
@@ -111,6 +113,46 @@ public class MockeryTest
     public void stubbedRun()
     {
       mockery.doNothing().when(mock).runs(t -> t.voidMethod(13));
+      mock.voidMethod(13);
+    }
+  }
+
+  public class GivenTest
+  {
+    private Mockable mock;
+    private Mockery.Given<Mockable> given;
+
+    @Before
+    public void setUp()
+    {
+      given = mockery.given(mock = mockery.mock(Mockable.class));
+    }
+
+    @Test
+    public void stubbedExecution()
+    {
+      given.executing(t -> t.nonVoidMethod(12)).thenReturn("dodici");
+      assertThat(mock.nonVoidMethod(12), is("dodici"));
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbedExecution()
+    {
+      given.executing(t -> t.nonVoidMethod(12)).thenReturn("dodici");
+      mock.nonVoidMethod(13);
+    }
+
+    @Test
+    public void stubbedRun()
+    {
+      given.running(t -> t.voidMethod(12)).doNothing();
+      mock.voidMethod(12);
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbedRun()
+    {
+      given.running(t -> t.voidMethod(12)).doNothing();
       mock.voidMethod(13);
     }
   }

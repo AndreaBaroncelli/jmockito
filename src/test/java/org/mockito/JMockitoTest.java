@@ -87,6 +87,46 @@ public class JMockitoTest
     }
   }
 
+  public static class GivenTest
+  {
+    private Mockable mock;
+    private JMockito.Given<Mockable> given;
+
+    @Before
+    public void setUp()
+    {
+      given = JMockito.given(mock = JMockito.mock(Mockable.class));
+    }
+
+    @Test
+    public void stubbedExecution()
+    {
+      given.executing(t -> t.nonVoidMethod(12)).thenReturn("dodici");
+      assertThat(mock.nonVoidMethod(12), is("dodici"));
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbedExecution()
+    {
+      given.executing(t -> t.nonVoidMethod(12)).thenReturn("dodici");
+      mock.nonVoidMethod(13);
+    }
+
+    @Test
+    public void stubbedRun()
+    {
+      given.running(t -> t.voidMethod(12)).doNothing();
+      mock.voidMethod(12);
+    }
+
+    @Test(expected = UnexpectedInvocationError.class)
+    public void unstubbedRun()
+    {
+      given.running(t -> t.voidMethod(12)).doNothing();
+      mock.voidMethod(13);
+    }
+  }
+
   public static class ResetTest
   {
     @Test

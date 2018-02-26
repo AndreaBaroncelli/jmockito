@@ -61,3 +61,19 @@ mockery.when(mock).runs(t -> t.someProcedure()).doNothing();
 ```
 
 meaning that no exception is thrown.
+
+##### Support to BDD syntax
+
+If you prefer given/when/then semantics, you may as well write stubbing this way:
+
+```java
+org.mockito.JMockito.given(mock).executing(t -> t.provideIntValue()).thenReturn(5);
+```
+
+and
+
+```java
+org.mockito.JMockito.given(mock).running(t -> t.someProcedure()).doNothing();
+```
+
+As usual, just replace ```org.mockito.JMockito``` with a ruled ```mockery``` to gain all additional stubbing checks.

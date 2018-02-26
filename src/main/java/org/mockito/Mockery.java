@@ -67,6 +67,11 @@ public class Mockery implements TestRule
     return new DoNothing(verifications);
   }
 
+  public <MOCK> Given<MOCK> given(MOCK mock)
+  {
+    return new Given<>(mock);
+  }
+
   public void reset()
   {
     mocks.forEach(JMockito::reset);
@@ -183,6 +188,58 @@ public class Mockery implements TestRule
       }
 
       public void runs(Consumer<? super MOCK> consumer)
+      {
+        consumer.accept(Mockito.doNothing().when(mock));
+        verifications.add(() -> consumer.accept(Mockito.verify(mock)));
+      }
+    }
+  }
+
+  public final class Given<MOCK>
+  {
+    private final MOCK mock;
+
+    private Given(MOCK mock)
+    {
+      this.mock = mock;
+    }
+
+    public <VALUE> Executing<VALUE> executing(Function<? super MOCK, ? extends VALUE> function)
+    {
+      return new Executing<>(function);
+    }
+
+    public Running running(Consumer<? super MOCK> consumer)
+    {
+      return new Running(consumer);
+    }
+
+    public final class Executing<VALUE>
+    {
+      private final Function<? super MOCK, ? extends VALUE> function;
+
+      private Executing(Function<? super MOCK, ? extends VALUE> function)
+      {
+        this.function = function;
+      }
+
+      public void thenReturn(VALUE value)
+      {
+        function.apply(Mockito.doReturn(value).when(mock));
+        verifications.add(() -> function.apply(Mockito.verify(mock)));
+      }
+    }
+
+    public final class Running
+    {
+      private final Consumer<? super MOCK> consumer;
+
+      private Running(Consumer<? super MOCK> consumer)
+      {
+        this.consumer = consumer;
+      }
+
+      public void doNothing()
       {
         consumer.accept(Mockito.doNothing().when(mock));
         verifications.add(() -> consumer.accept(Mockito.verify(mock)));

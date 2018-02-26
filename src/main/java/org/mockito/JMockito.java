@@ -39,6 +39,11 @@ public final class JMockito
     return new ReturnValue<>(value);
   }
 
+  public static <MOCK> Given<MOCK> given(MOCK mock)
+  {
+    return new Given<>(mock);
+  }
+
   public static void reset(Object mock)
   {
     String string = mock.toString();
@@ -124,6 +129,56 @@ public final class JMockito
       public void executes(Function<? super MOCK, ? extends VALUE> function)
       {
         function.apply(Mockito.doReturn(value).when(mock));
+      }
+    }
+  }
+
+  public static final class Given<MOCK>
+  {
+    private final MOCK mock;
+
+    private Given(MOCK mock)
+    {
+      this.mock = mock;
+    }
+
+    public <VALUE> Executing<VALUE> executing(Function<? super MOCK, ? extends VALUE> function)
+    {
+      return new Executing<>(function);
+    }
+
+    public Running running(Consumer<? super MOCK> consumer)
+    {
+      return new Running(consumer);
+    }
+
+    public final class Executing<VALUE>
+    {
+      private final Function<? super MOCK, ? extends VALUE> function;
+
+      private Executing(Function<? super MOCK, ? extends VALUE> function)
+      {
+        this.function = function;
+      }
+
+      public void thenReturn(VALUE value)
+      {
+        function.apply(Mockito.doReturn(value).when(mock));
+      }
+    }
+
+    public final class Running
+    {
+      private final Consumer<? super MOCK> consumer;
+
+      private Running(Consumer<? super MOCK> consumer)
+      {
+        this.consumer = consumer;
+      }
+
+      public void doNothing()
+      {
+        consumer.accept(Mockito.doNothing().when(mock));
       }
     }
   }
